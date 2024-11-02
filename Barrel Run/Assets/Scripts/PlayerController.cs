@@ -11,11 +11,10 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-
         _animator = GetComponent<Animator>();
         _animator.SetFloat("MoveX", 0);
         _animator.SetFloat("MoveY", 0.5f);
-       rigidBody = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -50,7 +49,7 @@ public class PlayerController : MonoBehaviour
         Vector2 position = transform.position;
         float height = col.collider.bounds.size.y;
 
-        if (isJumping) //&& point.y <position.y-0.4)
+        if (isJumping) //&& point.y <position.y-0.4
             isJumping = false;
     }
 
