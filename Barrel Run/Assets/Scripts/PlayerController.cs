@@ -45,7 +45,19 @@ public class PlayerController : MonoBehaviour
         }
 
         //play animation based off movement
-        playAnimation(moveBy);
+        if (isJumping) {
+            if (direction == 1) {
+                _animator.SetFloat("MoveX", 0);
+                _animator.SetFloat("MoveY", 1f);
+            }
+            else {
+                _animator.SetFloat("MoveX", 0);
+                _animator.SetFloat("MoveY", -1f);
+            }
+        }
+        else {
+            playAnimation(moveBy);
+        } 
     }
 
     // Triggered by collision and col is the object that it was collided with
@@ -59,17 +71,18 @@ public class PlayerController : MonoBehaviour
             Destroy(col.gameObject); 
             playerConcussed = true;
             playerHealth--;
+            //play sound
 
             _animator.SetFloat("MoveX", 0);
             _animator.SetFloat("MoveY", 0);
 
-            Invoke("uncuncussPlayer", 2f);
-            
+            Invoke("uncuncussPlayer", 3f);
         }
     }
 
     //allows the player to move again and reanimates them
     void uncuncussPlayer() {
+        direction = 1;
         playAnimation(0);
         playerConcussed = false;
     }
