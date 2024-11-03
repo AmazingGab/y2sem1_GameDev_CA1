@@ -59,9 +59,19 @@ public class PlayerController : MonoBehaviour
             Destroy(col.gameObject); 
             playerConcussed = true;
             playerHealth--;
-            //animation of concussed
-            //stop player movement
+
+            _animator.SetFloat("MoveX", 0);
+            _animator.SetFloat("MoveY", 0);
+
+            Invoke("uncuncussPlayer", 2f);
+            
         }
+    }
+
+    //allows the player to move again and reanimates them
+    void uncuncussPlayer() {
+        playAnimation(0);
+        playerConcussed = false;
     }
 
 //plays animation based on current movement, either 0,1,-1
