@@ -51,6 +51,13 @@ public class PlayerController : MonoBehaviour
 
         if (isJumping) //&& point.y <position.y-0.4
             isJumping = false;
+
+        if (col.gameObject.tag == "Barrel") {
+            Destroy(col.gameObject);
+            //remove health
+            //animation of concussed
+            //stop player movement
+        }
     }
 
     private void playAnimation(float moveBy) {
