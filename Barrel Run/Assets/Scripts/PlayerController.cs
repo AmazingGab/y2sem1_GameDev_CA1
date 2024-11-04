@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private int playerHealth = 4;
     private bool isJumping = false;
     private bool playerConcussed = false;
+    private int concusCount = 0;
 
     void Start() //start off method
     {
@@ -67,22 +68,38 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
     }
 
+    //when barrel calls collision this is called, stunning a player for a couple of seconds
     public void concussPlayer() {
+
         playerConcussed = true;
         playerHealth--;
         //play sound
 
+        //stops movement
+        direction = 1;
         _animator.SetFloat("MoveX", 0);
         _animator.SetFloat("MoveY", 0);
 
-        Invoke("uncuncussPlayer", 3f);
+        //hits the player back
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.AddForce(new Vector2(-direction*1.5f, Mathf.Sqrt( -1 * Physics2D.gravity.y * 2)), ForceMode2D.Impulse);
+        //tracks on what count it is on
+        concusCount++;
+        //calls the method 2s later
+        Invoke("uncuncussPlayer", 2f);
+        
     }
 
     //allows the player to move again and reanimates them
     void uncuncussPlayer() {
-        direction = 1;
-        playAnimation(0);
-        playerConcussed = false;
+        //removes 1 count
+        concusCount--;
+        //if its 0 return movement
+        if(concusCount == 0)
+        {
+            playAnimation(0);
+            playerConcussed = false;
+        }
     }
 
     public void addHealth() {
