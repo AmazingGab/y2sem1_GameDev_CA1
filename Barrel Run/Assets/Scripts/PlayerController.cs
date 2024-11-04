@@ -89,6 +89,9 @@ public class PlayerController : MonoBehaviour
         playerHealth++;
     }
 
+    public void addPowerUp() {
+    }
+
     //plays animation based on current movement, either 0,1,-1
     private void playAnimation(float moveBy) {
         if (moveBy == 0) {
