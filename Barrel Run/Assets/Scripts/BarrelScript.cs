@@ -4,6 +4,7 @@ public class BarrelScript : MonoBehaviour
 {
     private Animator _animator;
     private Rigidbody2D rigidBody;
+    [SerializeField] PlayerController player;
     [SerializeField] private float speedX;
 
     void Start()
@@ -15,6 +16,9 @@ public class BarrelScript : MonoBehaviour
         //gets rigidbody and sets the velocity
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.velocity = new Vector2(speedX, rigidBody.velocity.y);
+
+        //gets player
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     
@@ -27,6 +31,13 @@ public class BarrelScript : MonoBehaviour
         Vector2 pos = transform.position;
         if (pos.x < 0) {
             Destroy(this.gameObject);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.tag == "Player") {
+            Destroy(this.gameObject);
+            player.concussPlayer();
         }
     }
 }

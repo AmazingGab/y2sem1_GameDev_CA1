@@ -65,19 +65,17 @@ public class PlayerController : MonoBehaviour
         //checks if the player is jumping then make it false to allow to jump again
         if (isJumping)
             isJumping = false;
+    }
 
-        //checks if the player collided with the barrel
-        if (col.gameObject.tag == "Barrel") {
-            Destroy(col.gameObject); 
-            playerConcussed = true;
-            playerHealth--;
-            //play sound
+    public void concussPlayer() {
+        playerConcussed = true;
+        playerHealth--;
+        //play sound
 
-            _animator.SetFloat("MoveX", 0);
-            _animator.SetFloat("MoveY", 0);
+        _animator.SetFloat("MoveX", 0);
+        _animator.SetFloat("MoveY", 0);
 
-            Invoke("uncuncussPlayer", 3f);
-        }
+        Invoke("uncuncussPlayer", 3f);
     }
 
     //allows the player to move again and reanimates them
@@ -87,7 +85,11 @@ public class PlayerController : MonoBehaviour
         playerConcussed = false;
     }
 
-//plays animation based on current movement, either 0,1,-1
+    public void addHealth() {
+        playerHealth++;
+    }
+
+    //plays animation based on current movement, either 0,1,-1
     private void playAnimation(float moveBy) {
         if (moveBy == 0) {
             if (direction == 1) { //checks what direction to idle in
