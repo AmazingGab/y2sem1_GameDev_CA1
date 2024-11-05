@@ -79,9 +79,14 @@ public class PlayerController : MonoBehaviour
             return; //cancels concuss
         }
 
+        //sound
         playerConcussed = true;
-        playerHealth--;
-        //play sound
+        if (playerHealth != 1) 
+            playerHealth--;
+        else {
+            playerDeath();
+            return;
+        } 
 
         //stops movement
         direction = 1;
@@ -113,16 +118,26 @@ public class PlayerController : MonoBehaviour
     //uses the powerup and plays animation
     void hammerAbility() {
         playerHammerAbility--;
+        //sound
         _animator.SetTrigger("Strike");
+    }
+
+    //players death
+    void playerDeath() {
+        //sound
+        //ui
+        _animator.SetTrigger("Death");
     }
 
     //called by hp to give more health
     public void addHealth() {
+        //sound
         playerHealth++;
     }
 
     //called by hammer to give more powerups
     public void addPowerUp() {
+        //sound
         playerHammerAbility++;
     }
 

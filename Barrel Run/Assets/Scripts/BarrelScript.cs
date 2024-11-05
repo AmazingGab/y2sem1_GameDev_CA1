@@ -15,6 +15,8 @@ public class BarrelScript : MonoBehaviour
 
         //gets player
         player = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        //sound
     }
 
     
@@ -34,6 +36,7 @@ public class BarrelScript : MonoBehaviour
         if (other.gameObject.tag == "Player") {
             Destroy(this.gameObject);
             player.concussPlayer();
+            //sound
         }
     }
 }
