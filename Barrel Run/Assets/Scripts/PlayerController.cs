@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidBody;
     private int direction = 1;
     private int playerHealth = 4;
+    private int playerHammerAbility = 0;
     private bool isJumping = false;
     private bool playerConcussed = false;
     private int concusCount = 0;
@@ -102,11 +103,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //called by hp to give more health
     public void addHealth() {
         playerHealth++;
     }
 
+    //called by hammer to give more powerups
     public void addPowerUp() {
+        playerHammerAbility++;
     }
 
     //plays animation based on current movement, either 0,1,-1
