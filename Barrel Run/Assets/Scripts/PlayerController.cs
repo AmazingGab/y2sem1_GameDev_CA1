@@ -72,6 +72,13 @@ public class PlayerController : MonoBehaviour
     //when barrel calls collision this is called, stunning a player for a couple of seconds
     public void concussPlayer() {
 
+        //checks if player has powerup
+        if (playerHammerAbility > 0)
+        {
+            hammerAbility();
+            return; //cancels concuss
+        }
+
         playerConcussed = true;
         playerHealth--;
         //play sound
@@ -101,6 +108,12 @@ public class PlayerController : MonoBehaviour
             playAnimation(0);
             playerConcussed = false;
         }
+    }
+
+    //uses the powerup and plays animation
+    void hammerAbility() {
+        playerHammerAbility--;
+        _animator.SetTrigger("Strike");
     }
 
     //called by hp to give more health
