@@ -129,6 +129,11 @@ public class PlayerController : MonoBehaviour
         _animator.SetTrigger("Death");
     }
 
+    //freezing game after death animation finishes
+    void onDeathFinish(){
+        Time.timeScale = 0;
+    }
+
     //called by hp to give more health
     public void addHealth() {
         //sound

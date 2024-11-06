@@ -26981,63 +26981,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!1001 &109891568
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4637099192651017311, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_Name
-      value: GiantBarrel (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 250.16759
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 24.53094
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
 --- !u!1001 &186722254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28224,63 +28167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1245835764
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4637099192651017311, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_Name
-      value: GiantBarrel (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 248.68437
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 27.601479
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
 --- !u!1001 &1277742945
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28568,11 +28454,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 247.22716
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.661047
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5249817121667873103, guid: 01dd54870153ca3429e78c6e312b6550, type: 3}
       propertyPath: m_LocalPosition.z
@@ -29399,5 +29285,3 @@ SceneRoots:
   - {fileID: 560706035}
   - {fileID: 2100568671}
   - {fileID: 1525875995}
-  - {fileID: 109891568}
-  - {fileID: 1245835764}
