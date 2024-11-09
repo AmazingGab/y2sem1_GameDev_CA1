@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool playerConcussed = false;
     private int concusCount = 0;
-
+    public static event Action<bool> onLvlUp;
     void Start() //start off method
     {
         //gets animator and sets default values at first
@@ -44,6 +45,29 @@ public class PlayerController : MonoBehaviour
         //gets the direction the player is facing at 1 = right, -1 = left
         if (moveBy != 0) {
             direction = moveBy < 0 ? -1: 1;
+        }
+
+        //checking if player didnt fall into the void
+        if (pos.y < -5) {
+            transform.position = new Vector2(-2, 0);
+            if (playerHealth != 1) 
+                playerHealth--;
+            else {
+                playerDeath();
+                return;
+            }
+        }
+        
+        //checks if player reached the end
+        if (pos.x > 240) {
+            //sound
+            //ui
+            playerConcussed = true;
+            _animator.SetFloat("MoveX", 0.5f);
+            _animator.SetFloat("MoveY", -0.5f);
+            onLvlUp?.Invoke(false);
+            Invoke("newLevel", 5f);
+            return;
         }
 
         //play animation based off movement
@@ -98,7 +122,7 @@ public class PlayerController : MonoBehaviour
         rigidBody.AddForce(new Vector2(-direction*1.5f, Mathf.Sqrt( -1 * Physics2D.gravity.y * 2)), ForceMode2D.Impulse);
         //tracks on what count it is on
         concusCount++;
-        //calls the method 2s later
+        //calls the method 2s later (sourced from documentation)
         Invoke("uncuncussPlayer", 2f);
         
     }
@@ -124,6 +148,7 @@ public class PlayerController : MonoBehaviour
 
     //players death
     void playerDeath() {
+        playerConcussed = true;
         //sound
         //ui
         _animator.SetTrigger("Death");
@@ -168,4 +193,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void newLevel() {
+        playerConcussed = false;
+        transform.position = new Vector2(-2,0);
+        playAnimation(0);
+        onLvlUp?.Invoke(true);
+    }
 }

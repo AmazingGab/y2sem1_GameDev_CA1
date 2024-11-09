@@ -27,7 +27,7 @@ public class BarrelScript : MonoBehaviour
 
         //checks the current position and if its less than 0 it gets deleted
         Vector2 pos = transform.position;
-        if (pos.x < 0) {
+        if (pos.x < 0 || pos.y < -6) {
             Destroy(this.gameObject);
         }
     }
