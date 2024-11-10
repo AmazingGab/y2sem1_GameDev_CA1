@@ -28,6 +28,7 @@ public class BarrelScript : MonoBehaviour
         }
     }
 
+    //tries to concuss player and destroys after being touched by player
     void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Player") {
             Destroy(this.gameObject);

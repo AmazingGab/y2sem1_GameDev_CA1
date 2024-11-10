@@ -13,6 +13,7 @@ public class MenuScript : MonoBehaviour
 
     void Start()
     {
+        gameRunning = true;
         StartCoroutine(spawner());
     }
 
@@ -30,8 +31,7 @@ public class MenuScript : MonoBehaviour
         Instantiate(barrel, spawnPosition, Quaternion.identity);
     }
 
-    
-
+    //changes the scene by using button click from canvas
     public void changeScene(String name) {
         gameRunning = false;
         SceneManager.LoadScene(name);

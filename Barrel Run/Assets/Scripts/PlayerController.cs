@@ -234,6 +234,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //this sets up the new level by reset player location and reenabling movement
     void newLevel() {
         levelPanel.SetActive(false);
         playerConcussed = false;

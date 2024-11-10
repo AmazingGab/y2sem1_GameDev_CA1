@@ -47,17 +47,11 @@ public class LevelScript : MonoBehaviour
         StartCoroutine(spawner());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     //creates method and spawns a barrerl while the game in running  
     IEnumerator spawner() {
         while (gameRunning) {
             spawnBarrel();
-            yield return new WaitForSeconds((float) 4f -(currentLevel/4));
+            yield return new WaitForSeconds((float) 4f -(currentLevel/5));
         }    
     }
 
@@ -69,34 +63,41 @@ public class LevelScript : MonoBehaviour
 
     //spawns healthPack at random location
     void spawnHealthPack() {
+        int amount = UnityEngine.Random.Range(1,1+currentLevel);
+
+        if (amount == 0)
+            return;
+
+        for (int i = 1;i <= amount; i++) {
+            int yPosition = UnityEngine.Random.Range(1, 15)-1;
+            int xPosition = 12 + 16*Math.Abs(yPosition);
+            Instantiate(healthPack, new Vector2(xPosition,yPosition-1), Quaternion.identity);
+        }
+    }
+
+    //spawns hammer at random location
+    void spawnHammer() {
         int amount = UnityEngine.Random.Range(0,1+currentLevel);
 
         if (amount == 0)
             return;
 
-        int yPosition = UnityEngine.Random.Range(1, 15)-1;
-        int xPosition = 12 + 16*Math.Abs(yPosition);
-        Instantiate(healthPack, new Vector2(xPosition,yPosition-1), Quaternion.identity);
+        for (int i = 1;i <= amount; i++) {
+            int yPosition = UnityEngine.Random.Range(1, 15)-1;
+            int xPosition = 12 + 16*Math.Abs(yPosition);
+            Instantiate(hammer, new Vector2(xPosition,yPosition-1), Quaternion.identity);
+        }
     }
 
-    //spawns hammer at random location
-    void spawnHammer() {
-        int amount = UnityEngine.Random.Range(0,0+currentLevel);
-
-        if (amount == 0)
-            return;
-
-        int yPosition = UnityEngine.Random.Range(1, 15)-1;
-        int xPosition = 12 + 16*Math.Abs(yPosition);
-        Instantiate(hammer, new Vector2(xPosition,yPosition-1), Quaternion.identity);
-    }
-
+    //reloads the scene by using button click from canvas
     public void onClickTryAgain() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
     }
 
+    //changes the scene by using button click from canvas
     public void changeScene(String name) {
         SceneManager.LoadScene(name);
+        Time.timeScale = 1;
     }
 }

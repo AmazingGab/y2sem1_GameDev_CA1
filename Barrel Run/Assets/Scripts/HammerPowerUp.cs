@@ -11,12 +11,7 @@ public class HammerPowerUp : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //gives player powerup when touched
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
             Destroy(this.gameObject);
