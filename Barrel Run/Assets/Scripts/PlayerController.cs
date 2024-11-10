@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
         }
         
         //checks if player reached the end
-        if (pos.x > 236) {
+        if (pos.x > 237) {
             //sound
             //ui
             playerConcussed = true;
