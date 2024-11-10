@@ -14,8 +14,18 @@ public class PlayerController : MonoBehaviour
     private bool playerConcussed = false;
     private int concusCount = 0;
     public static event Action<bool> onLvlUp;
+
+    private AudioSource source;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip hurtSound;
+    [SerializeField] private AudioClip failSound;
+    [SerializeField] private AudioClip winSound;
+    [SerializeField] private AudioClip pickupSound;
+    [SerializeField] private AudioClip breakSound;
+
     void Start() //start off method
     {
+        source = GetComponent<AudioSource>();
         //gets animator and sets default values at first
         _animator = GetComponent<Animator>();
         _animator.SetFloat("MoveX", 0);
@@ -32,6 +42,7 @@ public class PlayerController : MonoBehaviour
         //check whether space or W is pressed and isnt jumping then jumps
         if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && !isJumping) {
             isJumping = true;
+            source.PlayOneShot(jumpSound);
             rigidBody.velocity = Vector3.zero;
             rigidBody.AddForce(new Vector2(0, Mathf.Sqrt( -1 * Physics2D.gravity.y * jumpHeight)), ForceMode2D.Impulse);
         }
@@ -60,7 +71,7 @@ public class PlayerController : MonoBehaviour
         
         //checks if player reached the end
         if (pos.x > 237) {
-            //sound
+            source.PlayOneShot(winSound);
             //ui
             playerConcussed = true;
             _animator.SetFloat("MoveX", 0.5f);
@@ -95,7 +106,7 @@ public class PlayerController : MonoBehaviour
 
     //when barrel calls collision this is called, stunning a player for a couple of seconds
     public void concussPlayer() {
-
+        source.PlayOneShot(breakSound);
         //checks if player has powerup
         if (playerHammerAbility > 0)
         {
@@ -103,7 +114,7 @@ public class PlayerController : MonoBehaviour
             return; //cancels concuss
         }
 
-        //sound
+        source.PlayOneShot(hurtSound);
         playerConcussed = true;
         if (playerHealth != 1) 
             playerHealth--;
@@ -142,14 +153,13 @@ public class PlayerController : MonoBehaviour
     //uses the powerup and plays animation
     void hammerAbility() {
         playerHammerAbility--;
-        //sound
         _animator.SetTrigger("Strike");
     }
 
     //players death
     void playerDeath() {
         playerConcussed = true;
-        //sound
+        source.PlayOneShot(failSound);
         //ui
         _animator.SetTrigger("Death");
     }
@@ -161,13 +171,13 @@ public class PlayerController : MonoBehaviour
 
     //called by hp to give more health
     public void addHealth() {
-        //sound
+        source.PlayOneShot(pickupSound);
         playerHealth++;
     }
 
     //called by hammer to give more powerups
     public void addPowerUp() {
-        //sound
+        source.PlayOneShot(pickupSound);
         playerHammerAbility++;
     }
 

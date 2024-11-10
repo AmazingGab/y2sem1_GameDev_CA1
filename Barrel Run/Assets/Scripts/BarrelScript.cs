@@ -8,17 +8,13 @@ public class BarrelScript : MonoBehaviour
 
     void Start()
     {
-        
         //gets rigidbody and sets the velocity
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.velocity = new Vector2(speedX, rigidBody.velocity.y);
 
         //gets player
         player = GameObject.Find("Player").GetComponent<PlayerController>();
-
-        //sound
     }
-
     
     void Update()
     {
@@ -36,7 +32,6 @@ public class BarrelScript : MonoBehaviour
         if (other.gameObject.tag == "Player") {
             Destroy(this.gameObject);
             player.concussPlayer();
-            //sound
         }
     }
 }
