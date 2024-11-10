@@ -59,14 +59,14 @@ public class PlayerController : MonoBehaviour
         }
         
         //checks if player reached the end
-        if (pos.x > 240) {
+        if (pos.x > 236) {
             //sound
             //ui
             playerConcussed = true;
             _animator.SetFloat("MoveX", 0.5f);
             _animator.SetFloat("MoveY", -0.5f);
             onLvlUp?.Invoke(false);
-            Invoke("newLevel", 5f);
+            Invoke("newLevel", 2f);
             return;
         }
 
