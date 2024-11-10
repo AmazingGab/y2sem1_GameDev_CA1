@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,8 +25,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip pickupSound;
     [SerializeField] private AudioClip breakSound;
 
+    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private TMP_Text hammerText;
+    [SerializeField] private Image heartImage;
+    [SerializeField] private Sprite redHeart;
+    [SerializeField] private Sprite greenHeart;
+
+    [SerializeField] private GameObject deathPanel;
+    [SerializeField] private GameObject levelPanel;
+
     void Start() //start off method
     {
+        healthText.text = playerHealth.ToString();
+        hammerText.text = (playerHammerAbility+"X").ToString();
         source = GetComponent<AudioSource>();
         //gets animator and sets default values at first
         _animator = GetComponent<Animator>();
@@ -60,10 +73,14 @@ public class PlayerController : MonoBehaviour
 
         //checking if player didnt fall into the void
         if (pos.y < -5) {
+            source.PlayOneShot(hurtSound);
             transform.position = new Vector2(-2, 0);
-            if (playerHealth != 1) 
+            if (playerHealth != 1) {
                 playerHealth--;
-            else {
+                updateHeart();
+            } else {
+                playerHealth--;
+                updateHeart();
                 playerDeath();
                 return;
             }
@@ -72,12 +89,12 @@ public class PlayerController : MonoBehaviour
         //checks if player reached the end
         if (pos.x > 237) {
             source.PlayOneShot(winSound);
-            //ui
+            levelPanel.SetActive(true);
             playerConcussed = true;
             _animator.SetFloat("MoveX", 0.5f);
             _animator.SetFloat("MoveY", -0.5f);
             onLvlUp?.Invoke(false);
-            Invoke("newLevel", 2f);
+            Invoke("newLevel", 4f);
             return;
         }
 
@@ -104,6 +121,14 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
     }
 
+    void updateHeart() {
+        healthText.text = playerHealth.ToString();
+        if (playerHealth < 2)
+            heartImage.sprite = redHeart;
+        else
+            heartImage.sprite = greenHeart;
+    }
+
     //when barrel calls collision this is called, stunning a player for a couple of seconds
     public void concussPlayer() {
         source.PlayOneShot(breakSound);
@@ -116,9 +141,12 @@ public class PlayerController : MonoBehaviour
 
         source.PlayOneShot(hurtSound);
         playerConcussed = true;
-        if (playerHealth != 1) 
+        if (playerHealth != 1) {
             playerHealth--;
-        else {
+            updateHeart();
+        } else {
+            playerHealth--;
+            updateHeart();
             playerDeath();
             return;
         } 
@@ -153,6 +181,7 @@ public class PlayerController : MonoBehaviour
     //uses the powerup and plays animation
     void hammerAbility() {
         playerHammerAbility--;
+        hammerText.text = (playerHammerAbility+"X").ToString();
         _animator.SetTrigger("Strike");
     }
 
@@ -160,7 +189,7 @@ public class PlayerController : MonoBehaviour
     void playerDeath() {
         playerConcussed = true;
         source.PlayOneShot(failSound);
-        //ui
+        deathPanel.SetActive(true);
         _animator.SetTrigger("Death");
     }
 
@@ -173,12 +202,14 @@ public class PlayerController : MonoBehaviour
     public void addHealth() {
         source.PlayOneShot(pickupSound);
         playerHealth++;
+        updateHeart();
     }
 
     //called by hammer to give more powerups
     public void addPowerUp() {
         source.PlayOneShot(pickupSound);
         playerHammerAbility++;
+        hammerText.text = (playerHammerAbility+"X").ToString();
     }
 
     //plays animation based on current movement, either 0,1,-1
@@ -204,6 +235,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void newLevel() {
+        levelPanel.SetActive(false);
         playerConcussed = false;
         transform.position = new Vector2(-2,0);
         playAnimation(0);

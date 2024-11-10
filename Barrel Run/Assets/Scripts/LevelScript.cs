@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LevelScript : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class LevelScript : MonoBehaviour
     [SerializeField] private GameObject bigBarrel;
     [SerializeField] private GameObject healthPack;
     [SerializeField] private GameObject hammer;
+    [SerializeField] private TMP_Text levelText;
     private Vector3 spawnPosition = new Vector3(250,25,0);
     private bool gameRunning = true;
     private int currentLevel = 1;
@@ -26,6 +29,7 @@ public class LevelScript : MonoBehaviour
         gameRunning = state;
         if (state) {
             currentLevel++;
+            levelText.text = ("LEVEL: "+currentLevel).ToString();
             spawnHealthPack();
             spawnHammer();
             StartCoroutine(spawner());
@@ -35,6 +39,7 @@ public class LevelScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        levelText.text = ("LEVEL: "+currentLevel).ToString();
         //spawns health pack and hammer
         spawnHealthPack();
         spawnHammer();
@@ -84,5 +89,10 @@ public class LevelScript : MonoBehaviour
         int yPosition = UnityEngine.Random.Range(1, 15)-1;
         int xPosition = 12 + 16*Math.Abs(yPosition);
         Instantiate(hammer, new Vector2(xPosition,yPosition-1), Quaternion.identity);
+    }
+
+    public void onClickTryAgain() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
     }
 }
