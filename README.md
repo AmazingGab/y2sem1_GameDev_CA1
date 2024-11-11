@@ -1,7 +1,7 @@
 # Instructions:
-- Start game in GameStart scene in Scenes!
+- Start game in MainMenu scene in Scenes!
 - Go through the menu and click play!
-- Go through many levels to complete the game!
+- Go through as many levels as you can!
 - Don't lose!
 
 # Movement:
@@ -10,4 +10,4 @@
 - *D* - Move right
 
 # Video Essay:
-- youtube link here...
+- youtube link [here](https://youtu.be/MVb4knranZA).
