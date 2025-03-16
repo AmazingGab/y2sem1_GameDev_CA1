@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && !isJumping) {
             isJumping = true;
             source.PlayOneShot(jumpSound);
-            rigidBody.velocity = Vector3.zero;
+            rigidBody.linearVelocity = Vector3.zero;
             rigidBody.AddForce(new Vector2(0, Mathf.Sqrt( -1 * Physics2D.gravity.y * jumpHeight)), ForceMode2D.Impulse);
         }
 
@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetFloat("MoveY", 0);
 
         //hits the player back
-        rigidBody.velocity = Vector3.zero;
+        rigidBody.linearVelocity = Vector3.zero;
         rigidBody.AddForce(new Vector2(-direction*1.5f, Mathf.Sqrt( -1 * Physics2D.gravity.y * 2)), ForceMode2D.Impulse);
         //tracks on what count it is on
         concusCount++;
