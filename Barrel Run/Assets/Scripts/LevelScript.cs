@@ -17,11 +17,11 @@ public class LevelScript : MonoBehaviour
 
     // detecting event when player reaches the next level
     private void OnEnable() {
-        PlayerController.onLvlUp += setGameState;
+        PlayerController.OnLvlUp += setGameState;
     }
 
     private void OnDisable() {
-        PlayerController.onLvlUp -= setGameState;
+        PlayerController.OnLvlUp -= setGameState;
     }
 
     //sets up the next level

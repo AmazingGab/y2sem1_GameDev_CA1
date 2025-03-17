@@ -8,16 +8,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpHeight;
     private Animator _animator;
-    private Rigidbody2D rigidBody;
-    private int direction = 1;
-    private int playerHealth = 4;
-    private int playerHammerAbility = 0;
-    private bool isJumping = false;
-    private bool playerConcussed = false;
-    private int concusCount = 0;
-    public static event Action<bool> onLvlUp;
+    private Rigidbody2D _rigidBody;
+    private int _direction = 1;
+    private int _playerHealth = 4;
+    private int _playerHammerAbility = 0;
+    private bool _isJumping = false;
+    private bool _playerConcussed = false;
+    private int _concussCount = 0;
+    public static event Action<bool> OnLvlUp;
 
-    private AudioSource source;
+    private AudioSource _source;
     [SerializeField] private AudioClip jumpSound;
     [SerializeField] private AudioClip hurtSound;
     [SerializeField] private AudioClip failSound;
@@ -36,28 +36,28 @@ public class PlayerController : MonoBehaviour
 
     void Start() //start off method
     {
-        healthText.text = playerHealth.ToString();
-        hammerText.text = (playerHammerAbility+"X").ToString();
-        source = GetComponent<AudioSource>();
+        healthText.text = _playerHealth.ToString();
+        hammerText.text = (_playerHammerAbility+"X");
+        _source = GetComponent<AudioSource>();
         //gets animator and sets default values at first
         _animator = GetComponent<Animator>();
         _animator.SetFloat("MoveX", 0);
         _animator.SetFloat("MoveY", 0.5f);
         //gets rigidbody
-        rigidBody = GetComponent<Rigidbody2D>();
+        _rigidBody = GetComponent<Rigidbody2D>();
     }
 
     void Update() //constant updating method
     {
-        if (playerConcussed) //if player is concussed, they cant move
+        if (_playerConcussed) //if player is concussed, they cant move
             return;
 
-        //check whether space or W is pressed and isnt jumping then jumps
-        if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && !isJumping) {
-            isJumping = true;
-            source.PlayOneShot(jumpSound);
-            rigidBody.linearVelocity = Vector3.zero;
-            rigidBody.AddForce(new Vector2(0, Mathf.Sqrt( -1 * Physics2D.gravity.y * jumpHeight)), ForceMode2D.Impulse);
+        //check whether space or W is pressed and isn't jumping then jumps
+        if((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && !_isJumping) {
+            _isJumping = true;
+            _source.PlayOneShot(jumpSound);
+            _rigidBody.linearVelocity = Vector3.zero;
+            _rigidBody.AddForce(new Vector2(0, Mathf.Sqrt( -1 * Physics2D.gravity.y * jumpHeight)), ForceMode2D.Impulse);
         }
 
         //movement in horizontal direction is detected and then moved by the player
@@ -68,39 +68,39 @@ public class PlayerController : MonoBehaviour
 
         //gets the direction the player is facing at 1 = right, -1 = left
         if (moveBy != 0) {
-            direction = moveBy < 0 ? -1: 1;
+            _direction = moveBy < 0 ? -1: 1;
         }
 
-        //checking if player didnt fall into the void
+        //checking if player didn't fall into the void
         if (pos.y < -5) {
-            source.PlayOneShot(hurtSound);
+            _source.PlayOneShot(hurtSound);
             transform.position = new Vector2(-2, 0);
-            if (playerHealth != 1) {
-                playerHealth--;
-                updateHeart();
+            if (_playerHealth != 1) {
+                _playerHealth--;
+                UpdateHeart();
             } else {
-                playerHealth--;
-                updateHeart();
-                playerDeath();
+                _playerHealth--;
+                UpdateHeart();
+                PlayerDeath();
                 return;
             }
         }
         
         //checks if player reached the end
         if (pos.x > 237) {
-            source.PlayOneShot(winSound);
+            _source.PlayOneShot(winSound);
             levelPanel.SetActive(true);
-            playerConcussed = true;
+            _playerConcussed = true;
             _animator.SetFloat("MoveX", 0.5f);
             _animator.SetFloat("MoveY", -0.5f);
-            onLvlUp?.Invoke(false);
-            Invoke("newLevel", 4f);
+            OnLvlUp?.Invoke(false);
+            Invoke("NewLevel", 4f);
             return;
         }
 
         //play animation based off movement
-        if (isJumping) {
-            if (direction == 1) {
+        if (_isJumping) {
+            if (_direction == 1) {
                 _animator.SetFloat("MoveX", 0);
                 _animator.SetFloat("MoveY", 1f);
             }
@@ -110,85 +110,81 @@ public class PlayerController : MonoBehaviour
             }
         }
         else {
-            playAnimation(moveBy);
+            PlayAnimation(moveBy);
         } 
     }
 
     // Triggered by collision and col is the object that it was collided with
-    void OnCollisionEnter2D(Collision2D col) {
+    void OnCollisionEnter2D() {
         //checks if the player is jumping then make it false to allow to jump again
-        if (isJumping)
-            isJumping = false;
+        if (_isJumping)
+            _isJumping = false;
     }
 
-    void updateHeart() {
-        healthText.text = playerHealth.ToString();
-        if (playerHealth < 2)
-            heartImage.sprite = redHeart;
-        else
-            heartImage.sprite = greenHeart;
+    void UpdateHeart()
+    {
+        healthText.text = _playerHealth.ToString();
+        heartImage.sprite = _playerHealth < 2 ? redHeart : greenHeart;
     }
 
     //when barrel calls collision this is called, stunning a player for a couple of seconds
-    public void concussPlayer() {
-        source.PlayOneShot(breakSound);
-        //checks if player has powerup
-        if (playerHammerAbility > 0)
-        {
-            hammerAbility();
+    public void ConcussPlayer() {
+        _source.PlayOneShot(breakSound);
+        //checks if player has power up
+        if (_playerHammerAbility > 0) {
+            HammerAbility();
             return; //cancels concuss
         }
 
-        source.PlayOneShot(hurtSound);
-        playerConcussed = true;
-        if (playerHealth != 1) {
-            playerHealth--;
-            updateHeart();
+        _source.PlayOneShot(hurtSound);
+        _playerConcussed = true;
+        if (_playerHealth != 1) {
+            _playerHealth--;
+            UpdateHeart();
         } else {
-            playerHealth--;
-            updateHeart();
-            playerDeath();
+            _playerHealth--;
+            UpdateHeart();
+            PlayerDeath();
             return;
         } 
 
         //stops movement
-        direction = 1;
+        _direction = 1;
         _animator.SetFloat("MoveX", 0);
         _animator.SetFloat("MoveY", 0);
 
         //hits the player back
-        rigidBody.linearVelocity = Vector3.zero;
-        rigidBody.AddForce(new Vector2(-direction*1.5f, Mathf.Sqrt( -1 * Physics2D.gravity.y * 2)), ForceMode2D.Impulse);
+        _rigidBody.linearVelocity = Vector3.zero;
+        _rigidBody.AddForce(new Vector2(-_direction*1.5f, Mathf.Sqrt( -1 * Physics2D.gravity.y * 2)), ForceMode2D.Impulse);
         //tracks on what count it is on
-        concusCount++;
+        _concussCount++;
         //calls the method 2s later (sourced from documentation)
-        Invoke("uncuncussPlayer", 2f);
+        Invoke("RemoveConcussion", 2f);
         
     }
 
     //allows the player to move again and reanimates them
-    void uncuncussPlayer() {
+    void RemoveConcussion() {
         //removes 1 count
-        concusCount--;
+        _concussCount--;
         //if its 0 return movement
-        if(concusCount == 0)
-        {
-            playAnimation(0);
-            playerConcussed = false;
+        if(_concussCount == 0) {
+            PlayAnimation(0);
+            _playerConcussed = false;
         }
     }
 
-    //uses the powerup and plays animation
-    void hammerAbility() {
-        playerHammerAbility--;
-        hammerText.text = (playerHammerAbility+"X").ToString();
+    //uses the power up and plays animation
+    void HammerAbility() {
+        _playerHammerAbility--;
+        hammerText.text = (_playerHammerAbility+"X");
         _animator.SetTrigger("Strike");
     }
 
     //players death
-    void playerDeath() {
-        playerConcussed = true;
-        source.PlayOneShot(failSound);
+    void PlayerDeath() {
+        _playerConcussed = true;
+        _source.PlayOneShot(failSound);
         deathPanel.SetActive(true);
         _animator.SetTrigger("Death");
     }
@@ -199,47 +195,49 @@ public class PlayerController : MonoBehaviour
     }
 
     //called by hp to give more health
-    public void addHealth() {
-        source.PlayOneShot(pickupSound);
-        playerHealth++;
-        updateHeart();
+    public void AddHealth() {
+        _source.PlayOneShot(pickupSound);
+        _playerHealth++;
+        UpdateHeart();
     }
 
-    //called by hammer to give more powerups
-    public void addPowerUp() {
-        source.PlayOneShot(pickupSound);
-        playerHammerAbility++;
-        hammerText.text = (playerHammerAbility+"X").ToString();
+    //called by hammer to give more power ups
+    public void AddPowerUp() {
+        _source.PlayOneShot(pickupSound);
+        _playerHammerAbility++;
+        hammerText.text = (_playerHammerAbility+"X");
     }
 
     //plays animation based on current movement, either 0,1,-1
-    private void playAnimation(float moveBy) {
-        if (moveBy == 0) {
-            if (direction == 1) { //checks what direction to idle in
-            _animator.SetFloat("MoveX", 0.5f);
-            _animator.SetFloat("MoveY", 0.5f);
-            }
-            else{
-            _animator.SetFloat("MoveX", -0.5f);
-            _animator.SetFloat("MoveY", -0.5f);
-           }
-        }
-        else if (moveBy < 0) { //left walk
-            _animator.SetFloat("MoveX", -1);
-            _animator.SetFloat("MoveY", 0);
-        }
-        else { //right walk
-            _animator.SetFloat("MoveX", 1);
-            _animator.SetFloat("MoveY", 0);
+    private void PlayAnimation(float moveBy)
+    {
+        switch (moveBy)
+        {
+            case 0 when _direction == 1: //checks what direction to idle in
+                _animator.SetFloat("MoveX", 0.5f);
+                _animator.SetFloat("MoveY", 0.5f);
+                break;
+            case 0:
+                _animator.SetFloat("MoveX", -0.5f);
+                _animator.SetFloat("MoveY", -0.5f);
+                break;
+            case < 0: //left walk
+                _animator.SetFloat("MoveX", -1);
+                _animator.SetFloat("MoveY", 0);
+                break;
+            default: //right walk
+                _animator.SetFloat("MoveX", 1);
+                _animator.SetFloat("MoveY", 0);
+                break;
         }
     }
 
-    //this sets up the new level by reset player location and reenabling movement
-    void newLevel() {
+    //this sets up the new level by reset player location and re-enabling movement
+    void NewLevel() {
         levelPanel.SetActive(false);
-        playerConcussed = false;
+        _playerConcussed = false;
         transform.position = new Vector2(-2,0);
-        playAnimation(0);
-        onLvlUp?.Invoke(true);
+        PlayAnimation(0);
+        OnLvlUp?.Invoke(true);
     }
 }
